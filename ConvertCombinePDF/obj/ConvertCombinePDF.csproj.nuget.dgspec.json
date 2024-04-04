@@ -1,0 +1,95 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/jeffreyclaxton/Desktop/ConvertCombinePDF/ConvertCombinePDF/ConvertCombinePDF.csproj": {}
+  },
+  "projects": {
+    "/Users/jeffreyclaxton/Desktop/ConvertCombinePDF/ConvertCombinePDF/ConvertCombinePDF.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/jeffreyclaxton/Desktop/ConvertCombinePDF/ConvertCombinePDF/ConvertCombinePDF.csproj",
+        "projectName": "ConvertCombinePDF",
+        "projectPath": "/Users/jeffreyclaxton/Desktop/ConvertCombinePDF/ConvertCombinePDF/ConvertCombinePDF.csproj",
+        "packagesPath": "/Users/jeffreyclaxton/.nuget/packages/",
+        "outputPath": "/Users/jeffreyclaxton/Desktop/ConvertCombinePDF/ConvertCombinePDF/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/jeffreyclaxton/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "DocumentFormat.OpenXml": {
+              "target": "Package",
+              "version": "[3.0.2, )"
+            },
+            "Microsoft.Office.Interop.Word": {
+              "target": "Package",
+              "version": "[15.0.4797.1004, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
+            "PDFsharp": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "itext7": {
+              "target": "Package",
+              "version": "[8.0.3, )"
+            },
+            "itext7.bouncy-castle-adapter": {
+              "target": "Package",
+              "version": "[8.0.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.201/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

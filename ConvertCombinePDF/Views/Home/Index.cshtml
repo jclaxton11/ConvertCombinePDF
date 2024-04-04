@@ -1,0 +1,155 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<style>
+    .highlight {
+        background: yellow;
+    }
+</style>
+<div class="text-center">
+    <h1 class="display-4">Convert And Combine Your PDFs</h1>
+</div>
+
+<h2>Drag and Drop File Uploader</h2>
+<div class="flex-container">
+    <div id="dropArea" class="drop-area">
+        <div class="drop-area-text">Drag & Drop files here</div>
+    </div>
+    <button id="convertButton">Convert Files To PDF</button>
+    <h2>Files</h2>
+    <div id="fileNames"></div>
+</div>
+
+<form id="uploadForm" method="post" enctype="multipart/form-data">
+    <input type="file" id="fileInput" multiple" />
+</form>
+
+
+@section Scripts {
+    <script>
+        const dropArea = document.getElementById('dropArea');
+        const fileInput = document.getElementById('fileInput');
+        const fileDiv = document.getElementById('fileNames');
+        const convButton = document.getElementById('convertButton');
+
+        // Prevent default drag behaviors
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, preventDefaults, false);
+            document.body.addEventListener(eventName, preventDefaults, false);
+        });
+
+        // Highlight drop area when file is dragged over
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropArea.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, unhighlight, false);
+        });
+
+        // Handle dropped files
+        dropArea.addEventListener('drop', handleDrop, false);
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        function highlight() {
+            dropArea.classList.add('highlight');
+        }
+
+        function unhighlight() {
+            dropArea.classList.remove('highlight');
+        }
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+
+            handleFiles(files);
+        }
+
+        function handleFiles(files) {
+            // Handle uploaded files here
+            uploadFile(files);
+            
+        }
+
+        function convertFiles() {
+            fetch('@Url.Action("HandlePDF", "Home")', {
+                method: 'POST'
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                response.blob().then(blob => {
+                // Create a blob URL for the blob data
+                if (!blob) {
+                    throw new Error('Invalid Blob data');
+                }
+                const blobUrl = window.URL.createObjectURL(blob);
+
+                // Create a temporary link element
+                const link = document.createElement('a');
+                link.href = blobUrl;
+                link.download = 'converted_files.pdf'; // Set the filename
+
+                // Trigger a click event on the link to start the download
+                link.click();
+
+                // Clean up by revoking the blob URL
+                window.URL.revokeObjectURL(blobUrl);
+            });
+
+                // Handle response from server
+                
+                
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function uploadFile(files) {
+            const formData = new FormData();
+            
+            for (const file of files) {
+                formData.append('file', file);
+            }
+            fetch('@Url.Action("Upload", "Home")', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                // Handle response from server
+                const result = response.json().then(result => {
+                for (const fileName of result["UploadedFilePaths"]) {
+                    fileDiv.innerHTML += fileName;
+                } 
+               
+            });   
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        // Open file input when drop area is clicked
+        dropArea.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        // Trigger file upload when file input changes
+        fileInput.addEventListener('change', () => {
+            const files = fileInput.files;
+            handleFiles(files);
+        });
+
+        convButton.addEventListener('click', () => {
+            console.log("Button Clicked");
+            convertFiles();
+        });
+    </script>
+}
